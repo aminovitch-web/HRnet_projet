@@ -1,0 +1,57 @@
+header {
+  background-color: #53a8b6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+}
+.linkcustom {
+  color: black;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.linkcustom:hover {
+  color: white;
+}
+
+header .logoContainer {
+  width: 25%;
+  margin-left: 20px;
+  max-width: 372px;
+  min-width: 300px;
+
+  @media screen and (max-width: 480px) {
+    min-width: 200px;
+  }
+
+  header .logoContainer a {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 5%;
+  }
+
+  header .logoContainer a .logoContainer {
+    width: 25%;
+    aspect-ratio: 1/1;
+  }
+
+  header .logoContainer a .logoContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+header .navContainer {
+  height: 100%;
+  margin-right: 3%;
+  display: flex;
+  align-items: center;
+}
+div.name {
+  color: black;
+  text-decoration: none;
+  font-weight: 700;
+}

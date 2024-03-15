@@ -1,0 +1,18 @@
+@import "./assets/normalise.css";
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+body {
+  background-color: rgb(230, 229, 229);
+  margin: 0;
+}
+
+input {
+  box-sizing: border-box;
+  border: solid black 1px;
+  border-radius: 5px;
+  padding: 6px 10px 5px 25px;
+}
