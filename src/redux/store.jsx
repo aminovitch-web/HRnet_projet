@@ -19,27 +19,11 @@ const appDataSlice = createSlice({
   reducers: {},
 });
 
-const userInteractionSlice = createSlice({
-  name: "userInteraction",
-  initialState: {
-    page: null,
-    pageTitle: null,
-  },
-  reducers: {
-    updatePageLocation: (state, action) => {
-      state.page = action.payload.page;
-      state.pageTitle = action.payload.pageTitle;
-    },
-  },
-});
-
-export const selectSearch = (state) => state.search;
 export const selectEmployeeData = (state) => state.employeeData;
 
 export const store = configureStore({
   reducer: {
     employeeData: employeeDataSlice.reducer,
     appData: appDataSlice.reducer,
-    userInteraction: userInteractionSlice.reducer,
   },
 });

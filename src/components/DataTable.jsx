@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { useSelector } from "react-redux";
+import { RingLoader } from "react-spinners";
 import "../App.css";
 import { selectEmployeeData } from "../redux/store";
 
@@ -53,13 +55,24 @@ const columns = [
 
 export default function DataTableComponent() {
   const data = useSelector(selectEmployeeData);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
-    <DataTable
-      columns={columns}
-      data={data}
-      pagination
-      className="dataTableComponent"
-    />
+    <div className="dataTableComponent">
+      {isLoading ? (
+        <div className="loaderContainer">
+          <RingLoader color="#53a8b6" loading={isLoading} />
+        </div>
+      ) : (
+        <DataTable columns={columns} data={data} pagination />
+      )}
+    </div>
   );
 }
