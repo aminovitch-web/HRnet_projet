@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import { useSelector } from "react-redux";
 import { RingLoader } from "react-spinners";
 import "../App.css";
-import { selectEmployeeData } from "../redux/store";
+import useStore, { selectEmployeeData, selectSearch } from "../zustand/store";
 
 const columns = [
   {
@@ -54,7 +53,10 @@ const columns = [
 ];
 
 export default function DataTableComponent() {
-  const data = useSelector(selectEmployeeData);
+  const data = useStore(selectEmployeeData);
+  const search = useStore(selectSearch);
+  const setSearch = useStore((state) => state.updateSearch);
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -64,6 +66,36 @@ export default function DataTableComponent() {
     return () => clearTimeout(timeout);
   }, []);
 
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const filteredData = data.filter((row) => {
+    const {
+      firstName,
+      lastName,
+      startDate,
+      dateOfBirth,
+      department,
+      street,
+      city,
+      state,
+      zipCode,
+    } = row;
+    const searchTerm = search.toLowerCase();
+    return (
+      firstName.toLowerCase().includes(searchTerm) ||
+      lastName.toLowerCase().includes(searchTerm) ||
+      startDate.includes(searchTerm) ||
+      dateOfBirth.includes(searchTerm) ||
+      department.toLowerCase().includes(searchTerm) ||
+      street.toLowerCase().includes(searchTerm) ||
+      city.toLowerCase().includes(searchTerm) ||
+      state.toLowerCase().includes(searchTerm) ||
+      zipCode.includes(searchTerm)
+    );
+  });
+
   return (
     <div className="dataTableComponent">
       {isLoading ? (
@@ -71,7 +103,19 @@ export default function DataTableComponent() {
           <RingLoader color="#53a8b6" loading={isLoading} />
         </div>
       ) : (
-        <DataTable columns={columns} data={data} pagination />
+        <>
+          <div className="searchBoxContainer">
+            <input
+              type="text"
+              name="searchBox"
+              id="searchBox"
+              placeholder="Name, Adress, Department ..."
+              value={search}
+              onChange={handleSearchChange}
+            />
+          </div>
+          <DataTable columns={columns} data={filteredData} pagination />
+        </>
       )}
     </div>
   );
